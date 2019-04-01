@@ -103,6 +103,7 @@ public class Login extends AppCompatActivity {
                                         Bean b = (Bean) getApplicationContext();
 
                                         edit.putString("phone", ph);
+                                        edit.putString("userId", response.body().getData().getUserId());
                                         edit.putString("password", p);
                                         edit.apply();
 

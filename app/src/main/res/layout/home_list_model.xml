@@ -19,7 +19,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:src="@drawable/baby"
+                android:id="@+id/image"
                 android:scaleType="centerCrop"/>
 
             <ImageView
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
-                android:text="Babysitting"
+                android:id="@+id/title"
                 android:textColor="#fff"
                 android:layout_centerInParent="true"
                 android:gravity="center"

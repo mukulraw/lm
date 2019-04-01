@@ -50,6 +50,7 @@ public class Register extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,7 +214,7 @@ public class Register extends AppCompatActivity {
 
                                                             Intent i = new Intent(Register.this, Login.class);
                                                             startActivity(i);
-
+                                                            Toast.makeText(Register.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                                         } else {
 
                                                             Toast.makeText(Register.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

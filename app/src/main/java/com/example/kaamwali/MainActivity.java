@@ -3,6 +3,8 @@ package com.example.kaamwali;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -17,13 +19,34 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.kaamwali.bannerPOJO.Datum;
+import com.example.kaamwali.bannerPOJO.bannerBean;
+import com.example.kaamwali.categoryPOJO.categoryBean;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import me.relex.circleindicator.CircleIndicator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,12 +70,18 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences pref;
 
+    ProgressBar progress;
+
     SharedPreferences.Editor edit;
+
+    List<com.example.kaamwali.categoryPOJO.Datum> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        list = new ArrayList<>();
 
         pref = getSharedPreferences("pref", Context.MODE_PRIVATE);
 
@@ -60,8 +89,11 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
 
+        progress = findViewById(R.id.progress);
+
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         drawer = findViewById(R.id.drawer);
@@ -70,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
                 this, drawer, toolbar, R.string.open, R.string.close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        toolbar.setTitle("Home");
+        toolbar.setTitleTextColor(Color.WHITE);
 
         pager = (AutoScrollViewPager) findViewById(R.id.pager);
 
@@ -82,17 +117,12 @@ public class MainActivity extends AppCompatActivity {
 
         indicator = findViewById(R.id.indicator);
 
-        adapter = new ViewAdapter(getSupportFragmentManager(), 4);
-
-        pager.setAdapter(adapter);
-
-        indicator.setViewPager(pager);
 
         grid = findViewById(R.id.grid);
 
         manager = new GridLayoutManager(getApplicationContext() , 2);
 
-        ada  = new HomeAdapter(this);
+        ada  = new HomeAdapter(this , list);
 
         grid.setLayoutManager(manager);
 
@@ -253,12 +283,18 @@ public class MainActivity extends AppCompatActivity {
     public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.My>{
 
         Context context;
+        List<com.example.kaamwali.categoryPOJO.Datum> list = new ArrayList<>();
 
-        public HomeAdapter(Context context){
-
+        public HomeAdapter(Context context , List<com.example.kaamwali.categoryPOJO.Datum> list){
             this.context = context;
+            this.list = list;
         }
 
+        public void setData(List<com.example.kaamwali.categoryPOJO.Datum> list)
+        {
+            this.list = list;
+            notifyDataSetChanged();
+        }
 
         @NonNull
         @Override
@@ -269,28 +305,47 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull HomeAdapter.My my, int i) {
+        public void onBindViewHolder(@NonNull HomeAdapter.My holder, int i) {
+
+            final com.example.kaamwali.categoryPOJO.Datum item = list.get(i);
+
+
+            holder.title.setText(item.getName());
+
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).cacheInMemory(true).resetViewBeforeLoading(false).build();
+            ImageLoader loader = ImageLoader.getInstance();
+            loader.displayImage(item.getImage() , holder.image , options);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent(MainActivity.this , Filter.class);
+                    i.putExtra("cat_id" , item.getId());
+                    startActivity(i);
+                }
+            });
+
 
         }
 
         @Override
         public int getItemCount() {
-            return 6;
+            return list.size();
         }
 
         public class My extends RecyclerView.ViewHolder {
 
+            ImageView image;
+            TextView title;
+
             public My(@NonNull View itemView) {
                 super(itemView);
 
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                image = itemView.findViewById(R.id.image);
+                title = itemView.findViewById(R.id.title);
 
-                        Intent i = new Intent(MainActivity.this , Filter.class);
-                        startActivity(i);
-                    }
-                });
+
             }
         }
     }
@@ -310,36 +365,27 @@ public class MainActivity extends AppCompatActivity {
 
         public class ViewAdapter extends FragmentStatePagerAdapter {
 
+        List<Datum> blist = new ArrayList<>();
 
-            public ViewAdapter(FragmentManager fm, int tab) {
+            public ViewAdapter(FragmentManager fm, List<Datum> blist) {
                 super(fm);
+                this.blist = blist;
             }
 
             @Override
             public Fragment getItem(int i) {
 
-                if (i == 0) {
+                Image1 frag = new Image1();
+                Bundle b = new Bundle();
+                b.putString("url" , blist.get(i).getUrl());
+                frag.setArguments(b);
+                return frag;
 
-                    return new Image1();
-
-                } else if (i == 1) {
-
-                    return new Image2();
-                }else if (i == 2){
-
-                    return new Image3();
-                }else if (i == 3){
-
-                    return new Image4();
-                }
-
-
-                return null;
             }
 
             @Override
             public int getCount() {
-                return 4;
+                return blist.size();
             }
         }
 
@@ -385,6 +431,61 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         // start auto scroll when onResume
         pager.startAutoScroll();
+
+        progress.setVisibility(View.VISIBLE);
+
+        Bean b = (Bean) getApplicationContext();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(b.BaseUrl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AllApiInterface cr = retrofit.create(AllApiInterface.class);
+
+        Call<bannerBean> call = cr.getBanners();
+
+        call.enqueue(new Callback<bannerBean>() {
+            @Override
+            public void onResponse(Call<bannerBean> call, Response<bannerBean> response) {
+
+                adapter = new ViewAdapter(getSupportFragmentManager(), response.body().getData());
+
+                pager.setAdapter(adapter);
+
+                indicator.setViewPager(pager);
+
+                progress.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<bannerBean> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+            }
+        });
+
+        progress.setVisibility(View.VISIBLE);
+
+        Call<categoryBean> call1 = cr.getCategory();
+
+        call1.enqueue(new Callback<categoryBean>() {
+            @Override
+            public void onResponse(Call<categoryBean> call, Response<categoryBean> response) {
+
+                ada.setData(response.body().getData());
+
+                progress.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<categoryBean> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+            }
+        });
+
     }
 
 }

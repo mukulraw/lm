@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="radio_buttons">
+
+        <item>Hindu</item>
+        <item>Muslims</item>
+        <item>Christian</item>
+        <item>Others</item>
+
+    </string-array>
+</resources>

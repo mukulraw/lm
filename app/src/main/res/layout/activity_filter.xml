@@ -38,22 +38,22 @@
                 android:text="Select Area"
                 android:textSize="16sp" />
 
-            <RelativeLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/stroke"
                 android:padding="5dp"
+                app:cardUseCompatPadding="true"
 
                 >
 
 
-                <Spinner
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></Spinner>
-            </RelativeLayout>
+                    android:layout_height="wrap_content"/>
+            </android.support.v7.widget.CardView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -79,65 +79,19 @@
 
 
 
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
 
-                        <RadioGroup
+                        <com.whygraphics.multilineradiogroup.MultiLineRadioGroup
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
+                            android:id="@+id/religion"
+                            app:max_in_row="2"
+                            app:radio_buttons="@array/radio_buttons"
+                            />
 
 
-                            <RadioButton
-                                android:id="@+id/checkbox1"
-                                style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Hindu" />
 
-                            <RadioButton
-                                android:id="@+id/checkbox2"
-                                style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="30dp"
-                                android:layout_weight="1"
-
-                                android:text="Muslims" />
-                        </RadioGroup>
-
-                        <RadioGroup
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:orientation="horizontal">
-
-
-                            <RadioButton
-                                android:id="@+id/checkbox3"
-                                style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-
-                                android:text="Christian" />
-
-                            <RadioButton
-                                android:id="@+id/checkbox4"
-                                style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Others" />
-                        </RadioGroup>
-
-
-                    </RadioGroup>
 
 
 
@@ -181,30 +135,27 @@
 
                         <RadioButton
                             android:id="@+id/time1"
-                            style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="8 Hrs" />
+                            android:gravity="center_vertical"
+                            android:text="8 hrs" />
 
                         <RadioButton
                             android:id="@+id/time2"
-                            style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="10 Hrs" />
+                            android:gravity="center_vertical"
+                            android:text="10 hrs" />
 
 
                         <RadioButton
                             android:id="@+id/time3"
-                            style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
                             android:text="24 hrs" />
 
                 </RadioGroup>
@@ -248,7 +199,6 @@
 
                         <RadioButton
                             android:id="@+id/male"
-                            style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -257,7 +207,6 @@
 
                         <RadioButton
                             android:id="@+id/female"
-                            style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="30dp"
@@ -308,7 +257,6 @@
 
                         <RadioButton
                             android:id="@+id/low"
-                            style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -317,7 +265,6 @@
 
                         <RadioButton
                             android:id="@+id/high"
-                            style="@style/Base.Widget.AppCompat.CompoundButton.CheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="30dp"

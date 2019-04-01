@@ -5,6 +5,9 @@ import com.example.kaamwali.LoginPOJO.LoginBean;
 import com.example.kaamwali.ProfilePOJO.ProfileBean;
 import com.example.kaamwali.SignupPOJO.SignupBean;
 import com.example.kaamwali.UpdateprofilePOJO.UpdateBean;
+import com.example.kaamwali.baiPOJO.baiBean;
+import com.example.kaamwali.bannerPOJO.bannerBean;
+import com.example.kaamwali.categoryPOJO.categoryBean;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -78,6 +81,23 @@ public interface AllApiInterface {
     );
 */
 
+
+    @GET("kaamwali/api/getBanners.php")
+    Call<bannerBean> getBanners();
+
+    @GET("kaamwali/api/getCategories.php")
+    Call<categoryBean> getCategory();
+
+    @Multipart
+    @POST("kaamwali/api/filter.php")
+    Call<baiBean> filter(
+            @Part("userId") String userid,
+            @Part("city_id") String city,
+            @Part("religion") String religiom,
+            @Part("hour") String hour,
+            @Part("gender") String gender,
+            @Part("catId") String cat
+    );
 
 }
 

@@ -6,14 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.kaamwali.LocationPOJO.LocationBean;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
+import com.whygraphics.multilineradiogroup.MultiLineRadioGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,26 +34,39 @@ public class Filter extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    Spinner spinner;
+    SearchableSpinner spinner;
 
-    RadioButton hindu, muslims, others, christian, time1, time2, time3, low, high, male, female;
+    RadioButton time1, time2, time3, low, high, male, female;
 
     Button conti;
+
+    RadioGroup hour, gender, salary;
+
+    MultiLineRadioGroup religion;
 
     List<String> list = new ArrayList<>();
 
     List<String> lid = new ArrayList<>();
 
-    String sel;
+    String sel = "";
 
+    String r = "", h = "", g = "", s = "", c = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
+        c = getIntent().getStringExtra("cat_id");
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        hour = findViewById(R.id.radio);
+        gender = findViewById(R.id.rad);
+        salary = findViewById(R.id.group);
+        religion = findViewById(R.id.religion);
+
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.drawable.arrow);
@@ -63,11 +81,6 @@ public class Filter extends AppCompatActivity {
 
         spinner = findViewById(R.id.spinner);
 
-        hindu = findViewById(R.id.checkbox1);
-        muslims = findViewById(R.id.checkbox2);
-        christian = findViewById(R.id.checkbox3);
-        others = findViewById(R.id.checkbox4);
-
         male = findViewById(R.id.male);
         female = findViewById(R.id.female);
 
@@ -80,16 +93,6 @@ public class Filter extends AppCompatActivity {
 
         conti = findViewById(R.id.conti);
 
-        conti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Intent i = new Intent(Filter.this , Helper.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
 
         Bean b = (Bean) getApplicationContext();
@@ -145,6 +148,7 @@ public class Filter extends AppCompatActivity {
                     sel = lid.get(position - 1);
                 }
 
+
             }
 
             @Override
@@ -154,11 +158,111 @@ public class Filter extends AppCompatActivity {
         });
 
 
+        hour.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                int iidd = group.getCheckedRadioButtonId();
+
+                if (iidd > -1) {
+                    RadioButton rb = findViewById(iidd);
+
+                    h = rb.getText().toString();
+
+                }
+
+            }
+        });
+
+        gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                int iidd = group.getCheckedRadioButtonId();
+
+                if (iidd > -1) {
+                    RadioButton rb = findViewById(iidd);
+
+                    g = rb.getText().toString();
+
+                }
+
+            }
+        });
+
+        salary.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                int iidd = group.getCheckedRadioButtonId();
+
+                if (iidd > -1) {
+                    RadioButton rb = findViewById(iidd);
+
+                    s = rb.getText().toString();
+
+                }
+
+            }
+        });
+
+        religion.setOnCheckedChangeListener(new MultiLineRadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ViewGroup group, RadioButton button) {
+                r = button.getText().toString();
+            }
+        });
+        conti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (sel.length() > 0) {
+                    if (r.length() > 0)
+                    {
+                        if (h.length() > 0)
+                        {
+                            if (g.length() > 0)
+                            {
+                                if (s.length() > 0)
+                                {
+
+
+                                    Intent i = new Intent(Filter.this, Helper.class);
+                                    i.putExtra("cat_id" , c);
+                                    i.putExtra("religion" , r);
+                                    i.putExtra("hour" , h);
+                                    i.putExtra("gender" , g);
+                                    i.putExtra("salary" , s);
+                                    i.putExtra("city" , sel);
+                                    startActivity(i);
+                                    finish();
 
 
 
 
 
+
+                                }
+                                else {
+                                    Toast.makeText(Filter.this, "Please select salary", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else {
+                                Toast.makeText(Filter.this, "Please select a gender", Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
+                            Toast.makeText(Filter.this, "Please select an hour", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }else {
+                        Toast.makeText(Filter.this, "Please select a religion", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(Filter.this, "Please select an area", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
 
     }
