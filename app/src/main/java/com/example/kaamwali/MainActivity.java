@@ -68,11 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
     HomeAdapter ada;
 
-    SharedPreferences pref;
+    TextView name;
 
     ProgressBar progress;
 
-    SharedPreferences.Editor edit;
 
     List<com.example.kaamwali.categoryPOJO.Datum> list = new ArrayList<>();
 
@@ -83,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         list = new ArrayList<>();
 
-        pref = getSharedPreferences("pref", Context.MODE_PRIVATE);
-
-        edit = pref.edit();
+        name = findViewById(R.id.name);
 
         toolbar = findViewById(R.id.toolbar);
 
@@ -173,8 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(MainActivity.this , Login.class);
 
-                edit.clear();
-                edit.apply();
+SharePreferenceUtils.getInstance().deletePref();
 
                 startActivity(i);
                 finishAffinity();
@@ -432,6 +428,8 @@ public class MainActivity extends AppCompatActivity {
         // start auto scroll when onResume
         pager.startAutoScroll();
 
+        name.setText(SharePreferenceUtils.getInstance().getString("name"));
+
         progress.setVisibility(View.VISIBLE);
 
         Bean b = (Bean) getApplicationContext();
@@ -487,5 +485,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
 }

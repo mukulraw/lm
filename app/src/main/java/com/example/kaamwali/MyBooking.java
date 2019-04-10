@@ -39,7 +39,7 @@ public class MyBooking extends AppCompatActivity {
             }
         });
 
-        toolbar.setTitle("My Booking");
+        toolbar.setTitle("My Bookings");
 
 
         viewPager = findViewById(R.id.pager);

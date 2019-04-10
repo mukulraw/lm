@@ -33,9 +33,6 @@ public class Splash extends AppCompatActivity {
 
     ProgressBar bar;
 
-    SharedPreferences pref;
-
-    SharedPreferences.Editor edit;
 
     String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.CAMERA};
 
@@ -46,9 +43,6 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        pref = getSharedPreferences("pref", Context.MODE_PRIVATE);
-
-        edit = pref.edit();
 
         bar = (ProgressBar) findViewById(R.id.progress);
 
@@ -111,8 +105,8 @@ public class Splash extends AppCompatActivity {
 
     public void startApp() {
 
-            String ph = pref.getString("phone", "");
-            String p = pref.getString("password", "");
+            String ph = SharePreferenceUtils.getInstance().getString("phone");
+            String p = SharePreferenceUtils.getInstance().getString("password");
 
 
             if (ph.length() > 0 && p.length() > 0) {
@@ -137,11 +131,8 @@ public class Splash extends AppCompatActivity {
 
                         if (Objects.equals(response.body().getStatus() , "1")){
 
-                            Bean b = (Bean) getApplicationContext();
-
-                            b.userid = response.body().getData().getUserId();
-
-                            edit.apply();
+                            SharePreferenceUtils.getInstance().saveString("userId" , response.body().getData().getUserId());
+                            SharePreferenceUtils.getInstance().saveString("name" , response.body().getData().getFirstName() + " " + response.body().getData().getLastName());
 
                             Intent i = new Intent(Splash.this , MainActivity.class);
                             startActivity(i);

@@ -102,7 +102,7 @@ public class Profile extends AppCompatActivity {
 
             AllApiInterface cr = retrofit.create(AllApiInterface.class);
 
-            Call<ProfileBean> call = cr.profile(b.userid);
+            Call<ProfileBean> call = cr.profile(SharePreferenceUtils.getInstance().getString("userId"));
 
             call.enqueue(new Callback<ProfileBean>() {
                 @Override

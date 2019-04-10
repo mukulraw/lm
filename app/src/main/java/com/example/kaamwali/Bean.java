@@ -30,4 +30,5 @@ public class Bean extends Application {
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
 
     }
+
 }

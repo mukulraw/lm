@@ -7,6 +7,7 @@ import com.example.kaamwali.SignupPOJO.SignupBean;
 import com.example.kaamwali.UpdateprofilePOJO.UpdateBean;
 import com.example.kaamwali.baiPOJO.baiBean;
 import com.example.kaamwali.bannerPOJO.bannerBean;
+import com.example.kaamwali.bookingPOJO.bookingBean;
 import com.example.kaamwali.categoryPOJO.categoryBean;
 
 import okhttp3.RequestBody;
@@ -96,7 +97,30 @@ public interface AllApiInterface {
             @Part("religion") String religiom,
             @Part("hour") String hour,
             @Part("gender") String gender,
-            @Part("catId") String cat
+            @Part("catId") String cat,
+            @Part("sort") String sort
+    );
+
+    @Multipart
+    @POST("kaamwali/api/book.php")
+    Call<bookBean> book(
+            @Part("userId") String userid,
+            @Part("baiId") String bai,
+            @Part("service") String service
+    );
+
+    @Multipart
+    @POST("kaamwali/api/cancelBooking.php")
+    Call<bookBean> cancelBooking(
+            @Part("userId") String userid,
+            @Part("bookingId") String bookingId
+    );
+
+    @Multipart
+    @POST("kaamwali/api/getBookings.php")
+    Call<bookingBean> getBookings(
+            @Part("userId") String userid,
+            @Part("status") String bookingId
     );
 
 }

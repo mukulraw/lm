@@ -27,6 +27,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="15dp"
                 android:padding="5dp"
+                android:id="@+id/title"
                 android:text="Maid"
                 android:textSize="16sp" />
 

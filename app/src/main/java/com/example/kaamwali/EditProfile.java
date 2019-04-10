@@ -201,7 +201,7 @@ public class EditProfile extends AppCompatActivity {
 
                 AllApiInterface cr = retrofit.create(AllApiInterface.class);
 
-                Call<UpdateBean> call = cr.update(n, l, e, ph, mGender, a, sel, pi , b.userid);
+                Call<UpdateBean> call = cr.update(n, l, e, ph, mGender, a, sel, pi , SharePreferenceUtils.getInstance().getString("userId"));
                 call.enqueue(new Callback<UpdateBean>() {
                     @Override
                     public void onResponse(Call<UpdateBean> call, Response<UpdateBean> response) {

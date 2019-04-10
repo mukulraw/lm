@@ -199,7 +199,17 @@ public class Filter extends AppCompatActivity {
                 if (iidd > -1) {
                     RadioButton rb = findViewById(iidd);
 
-                    s = rb.getText().toString();
+                    String sal = rb.getText().toString();
+
+                    if (sal.equals("Low to High"))
+                    {
+                        s = "l2h";
+                    }
+                    else
+                    {
+                        s = "h2l";
+                    }
+
 
                 }
 

@@ -34,18 +34,11 @@ public class Login extends AppCompatActivity {
 
     ProgressBar bar;
 
-    SharedPreferences pref;
-
-    SharedPreferences.Editor edit;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        pref = getSharedPreferences("pref", Context.MODE_PRIVATE);
-
-        edit = pref.edit();
 
         login = findViewById(R.id.login);
 
@@ -102,10 +95,10 @@ public class Login extends AppCompatActivity {
 
                                         Bean b = (Bean) getApplicationContext();
 
-                                        edit.putString("phone", ph);
-                                        edit.putString("userId", response.body().getData().getUserId());
-                                        edit.putString("password", p);
-                                        edit.apply();
+                                        SharePreferenceUtils.getInstance().saveString("phone" , ph);
+                                        SharePreferenceUtils.getInstance().saveString("password" , p);
+                                        SharePreferenceUtils.getInstance().saveString("userId" , response.body().getData().getUserId());
+                                        SharePreferenceUtils.getInstance().saveString("name" , response.body().getData().getFirstName() + " " + response.body().getData().getLastName());
 
                                         Toast.makeText(Login.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 

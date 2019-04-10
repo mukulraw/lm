@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Helper"></activity>
+        <activity android:name=".HelperDetails"></activity>
+        <activity android:name=".Helper" />
         <activity android:name=".Help" />
         <activity android:name=".Otp" />
         <activity android:name=".EditProfile" />

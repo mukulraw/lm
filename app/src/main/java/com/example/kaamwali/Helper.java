@@ -1,6 +1,8 @@
 package com.example.kaamwali;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -13,10 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kaamwali.baiPOJO.Datum;
 import com.example.kaamwali.baiPOJO.baiBean;
@@ -117,7 +121,7 @@ public class Helper extends AppCompatActivity {
         AllApiInterface cr = retrofit.create(AllApiInterface.class);
 
 
-        Call<baiBean> call = cr.filter(pref.getString("userId" , "") , sel , r , h , g , c);
+        Call<baiBean> call = cr.filter(pref.getString("userId" , "") , sel , r , h , g , c , s);
 
         call.enqueue(new Callback<baiBean>() {
             @Override
@@ -167,7 +171,7 @@ public class Helper extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
 
-            Datum item = list.get(i);
+            final Datum item = list.get(i);
 
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).resetViewBeforeLoading(false).build();
             ImageLoader loader = ImageLoader.getInstance();
@@ -177,6 +181,76 @@ public class Helper extends AppCompatActivity {
             holder.cat.setText(item.getCategoryId());
             holder.age.setText(item.getAge() + " yrs old");
 
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(context , HelperDetails.class);
+                    intent.putExtra("na" , item.getName());
+                    intent.putExtra("se" , item.getCategoryId());
+                    intent.putExtra("la" , item.getLanguage());
+                    intent.putExtra("sk" , item.getSkills());
+                    intent.putExtra("ag" , item.getAge());
+                    intent.putExtra("ge" , item.getGender());
+                    intent.putExtra("ma" , item.getMaritalStatus());
+                    intent.putExtra("ho" , item.getHour());
+                    intent.putExtra("sa" , item.getSalary());
+                    intent.putExtra("im" , item.getImage());
+                    intent.putExtra("id" , item.getBaiId());
+                    context.startActivity(intent);
+
+                }
+            });
+
+            holder.book.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    progress.setVisibility(View.VISIBLE);
+                    Bean b = (Bean) getApplicationContext();
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(b.BaseUrl)
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    AllApiInterface cr = retrofit.create(AllApiInterface.class);
+
+                    Call<bookBean> call = cr.book(SharePreferenceUtils.getInstance().getString("userId") , item.getBaiId() , item.getCategoryId());
+
+                    call.enqueue(new Callback<bookBean>() {
+                        @Override
+                        public void onResponse(Call<bookBean> call, Response<bookBean> response) {
+
+                            if (response.body().getStatus().equals("1"))
+                            {
+                                Dialog dialog = new Dialog(context);
+                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                dialog.setContentView(R.layout.booking_dialog);
+                                dialog.setCancelable(true);
+                                dialog.show();
+
+                                TextView bid = dialog.findViewById(R.id.textView11);
+                                bid.setText(response.body().getBookingId());
+
+                            }
+                            else
+                            {
+                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                            progress.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<bookBean> call, Throwable t) {
+                            progress.setVisibility(View.GONE);
+                        }
+                    });
+
+                }
+            });
 
         }
 
