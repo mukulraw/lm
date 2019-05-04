@@ -9,7 +9,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/kbai"
+        android:src="@drawable/logooo"
+        android:background="#ffffff"
         android:padding="30dp"/>
 
     <ProgressBar
