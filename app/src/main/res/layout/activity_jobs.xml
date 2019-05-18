@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register">
+    tools:context=".Jobs">
 
 
     <ImageView
@@ -26,8 +26,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/arrow"
-        android:visibility="gone" />
+        android:id="@+id/back"
+        android:src="@drawable/arrowback"
+        android:visibility="visible" />
 
 
     <android.support.v4.widget.NestedScrollView
@@ -48,7 +49,7 @@
                 android:layout_marginEnd="10dp"
                 android:visibility="visible"
                 android:gravity="center"
-                android:text="Register here"
+                android:text="Apply for job now!"
                 android:textColor="#2C997B"
                 android:textSize="16dp" />
 
@@ -79,106 +80,71 @@
                 android:hint="Last Name" />
 
 
-            <belka.us.androidtoggleswitch.widgets.ToggleSwitch
-                android:id="@+id/gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/white"
-                android:textSize="16sp"
-                app:activeBgColor="@color/colorAccent"
-                app:activeTextColor="#fff"
-                app:cornerRadius="30dp"
-                app:inactiveBgColor="#00000000"
-                app:inactiveTextColor="#000000"
-                app:separatorColor="@color/colorAccent"
-                app:textToggleLeft="MALE"
-                app:textToggleRight="FEMALE"
-                app:toggleWidth="100dp" />
 
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:hint="Email ID"
+                android:hint="Phone"
                 android:background="@drawable/stroke"
                 android:padding="10dp"
-                android:inputType="textEmailAddress"
+                android:inputType="phone"
 
                 />
-
-            <EditText
-                android:id="@+id/mobile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:hint="Mobile"
-                android:maxLength="10"
-                android:background="@drawable/stroke"
-                android:padding="10dp"
-                android:inputType="number"
-                />
-
-
-            <EditText
-                android:id="@+id/Password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:hint="Password"
-                android:background="@drawable/stroke"
-                android:padding="10dp"
-                android:inputType="textPassword"
-
-                />
-
-
-            <EditText
-                android:id="@+id/cp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:hint="Confirm Password"
-                android:background="@drawable/stroke"
-                android:padding="10dp"
-                android:inputType="textPassword"
-
-                />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/stroke">
-
-
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    >
-
-                </Spinner>
-            </RelativeLayout>
-
 
             <EditText
                 android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:hint="Address"
+                android:maxLength="10"
+                android:background="@drawable/stroke"
+                android:padding="10dp"
+                android:inputType="textPostalAddress"
+                />
+
+
+            <EditText
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:hint="City"
+                android:background="@drawable/stroke"
+                android:padding="10dp"
+                android:inputType="text"
+
+                />
+
+
+            <EditText
+                android:id="@+id/state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:hint="State"
+                android:background="@drawable/stroke"
+                android:padding="10dp"
+                android:inputType="text"
+
+                />
+
+
+
+
+            <EditText
+                android:id="@+id/country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -187,12 +153,12 @@
                 android:padding="10dp"
                 android:inputType="textPostalAddress"
                 android:layout_marginEnd="10dp"
-                android:hint="Address"
+                android:hint="Country"
 
                 />
 
             <EditText
-                android:id="@+id/pin"
+                android:id="@+id/pincode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -204,6 +170,22 @@
                 android:inputType="number" />
 
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="10dp"
+                android:id="@+id/image"
+                android:src="@drawable/person"
+                android:scaleType="centerCrop"
+                android:background="#ffff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Profile photo"
+                />
+
             <Button
                 android:id="@+id/register"
                 android:layout_width="match_parent"
@@ -213,7 +195,7 @@
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/btnround"
-                android:text="Register"
+                android:text="SUBMIT"
                 android:textColor="#fff" />
 
         </LinearLayout>
